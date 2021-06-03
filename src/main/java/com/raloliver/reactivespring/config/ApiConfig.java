@@ -12,9 +12,10 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @Configuration
 @EnableWebFlux
 public class ApiConfig {
-    /*
-    * This object mapper allows us to serialize a Java object into a JSON string and vice versa.
-    */
+
+    /**
+     * This object mapper allows us to serialize a Java object into a JSON string and vice versa.
+     */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
