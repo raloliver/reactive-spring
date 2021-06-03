@@ -1,8 +1,11 @@
 package com.raloliver.reactivespring.controller;
 
 import com.raloliver.reactivespring.model.Reservation;
+import com.raloliver.reactivespring.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -13,40 +16,57 @@ public class ReservationResource {
     public static final String ROOM_RESERVATION = "room/reservation";
     public static final String APPLICATION_JSON_VALUE = MediaType.APPLICATION_JSON_VALUE;
 
+    private final ReservationService reservationService;
+
     /**
-     * @PathVariable. Because the variable name and the path parameter match,
-     * string will know to extract that path parameter to this variable
+     * @param reservationService
+     * @Autowired Spring will now inject a instance of
+     * the ReservationService implementation into our controller.
+     */
+    @Autowired
+    public ReservationResource(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
+
+    /**
      * @param roomId
      * @return
+     * @PathVariable. Because the variable name and the path parameter match,
+     * string will know to extract that path parameter to this variable
      */
-    @GetMapping(path = "{roomId}", produces = APPLICATION_JSON_VALUE)
-    public Mono<String> getReservationById(@PathVariable String roomId) {
+    @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
+    public Mono<Reservation> getReservationById(@PathVariable String id) {
 
-        //reservationService.getReservation(roomId);
-        return Mono.just("{}");
+        return reservationService.getReservation(id);
+    }
+
+    @GetMapping(path = "", produces = APPLICATION_JSON_VALUE)
+    public Flux<Reservation> getAllReservations() {
+
+        return reservationService.listAllReservations();
     }
 
     /**
-     * @RequestBody This annotation will deserialize a JSON RequestBody into a reservation object.
      * @param reservation
      * @return
+     * @RequestBody This annotation will deserialize a JSON RequestBody into a reservation object.
      */
     @PostMapping(path = "", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public Mono<String> createReservation(@RequestBody Mono<Reservation> reservation) {
+    public Mono<Reservation> createReservation(@RequestBody Mono<Reservation> reservation) {
 
-        return Mono.just("{}");
+        return reservationService.createReservation(reservation);
     }
 
-    @PutMapping(path = "{roomId}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public Mono<String> updatePrice(@PathVariable String roomId, @RequestBody Mono<Reservation> reservation) {
+    @PutMapping(path = "{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+    public Mono<Reservation> updatePrice(@PathVariable String id, @RequestBody Mono<Reservation> reservation) {
 
-        return Mono.just("{}");
+        return reservationService.updateReservation(id, reservation);
     }
 
-    @DeleteMapping(path = "{roomId}")
-    public Mono<Boolean> deleteReservation(@PathVariable String roomId) {
+    @DeleteMapping(path = "{id}")
+    public Mono<Boolean> deleteReservation(@PathVariable String id) {
 
-        return Mono.just(true);
+        return reservationService.deleteReservation(id);
     }
 }
 
