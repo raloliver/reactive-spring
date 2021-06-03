@@ -20,7 +20,7 @@ public class DataConfig {
 
     @Bean
     public ReactiveMongoDatabaseFactory mongoDatabaseFactory(MongoClient mongoClient) {
-        return new SimpleReactiveMongoDatabaseFactory(mongoClient, DATABASE_NAME)
+        return new SimpleReactiveMongoDatabaseFactory(mongoClient, DATABASE_NAME);
     }
 
     @Bean
