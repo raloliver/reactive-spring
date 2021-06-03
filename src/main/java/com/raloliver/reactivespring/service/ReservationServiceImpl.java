@@ -62,6 +62,7 @@ public class ReservationServiceImpl implements ReservationService {
      * necessarily propagate to every single node before you get a
      * successful acknowledgement. However, we will return true,
      * if a delete operation was acknowledged.
+     *
      * @param id
      * @return
      */

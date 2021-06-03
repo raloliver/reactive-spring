@@ -21,7 +21,7 @@ public class ApiConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                    .configure(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS, true);
+                .configure(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS, true);
 
         return objectMapper;
     }
